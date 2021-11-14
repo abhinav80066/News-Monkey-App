@@ -139,17 +139,41 @@ export class News extends Component {
         console.log("Hello I am a constructor")
         this.state = {
             articles:this.articles,
-            loading : false
+            page: 1
         }
     }
 
     async componentDidMount(){
-        let url = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e";
+        let url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=1&pageSize=15";
         let data = await fetch(url);
         let parsedData = await data.json()
         console.log(parsedData);
         this.setState({articles:parsedData.articles})
     }
+    handleNextClick = async ()=>{
+        console.log("Next")
+        let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page+1}&pageSize=15`;
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData);
+        this.setState({
+            articles:parsedData.articles,
+            page: this.state.page + 1,
+        })
+    }
+    
+    handlePrevClick = async ()=>{
+        console.log("Prev")
+        let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page-1}&pageSize=15`;
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData);
+        this.setState({
+            articles:parsedData.articles,
+            page: this.state.page - 1,
+        })
+    }
+
     render() {
         return (
             <div className="container my-3">
@@ -157,13 +181,13 @@ export class News extends Component {
                 <div className="row">
                 {this.state.articles.map((element)=>{
                     return  <div className="col-md-4" key={element.url}>
-                    <Newsitem  title={element.title.slice(0,45)} description={element.description.slice(0,90)} imageUrl={element.urlToImage} newsUrl={element.url} />
+                    <Newsitem  title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} />
                 </div>
                 })}
                 </div>
                 <div className="container d-flex justify-content-between">
-                    <button type="button" class="btn btn-dark" onClick={this.handlePrevClick}> &larr; Previous</button>
-                    <button type="button" class="btn btn-dark" onClick={this.handleNextClick}> Next &larr;</button>
+                    <button disabled={this.state.page<=1}type="button" class="btn btn-dark" onClick={this.handlePrevClick}> &larr; Previous</button>
+                    <button type="button" class="btn btn-dark" onClick={this.handleNextClick}> Next &rarr;</button>
                 </div>
             </div>
         )
