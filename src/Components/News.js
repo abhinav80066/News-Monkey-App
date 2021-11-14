@@ -142,6 +142,14 @@ export class News extends Component {
             loading : false
         }
     }
+
+    async componentDidMount(){
+        let url = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e";
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData);
+        this.setState({articles:parsedData.articles})
+    }
     render() {
         return (
             <div className="container my-3">
@@ -152,6 +160,10 @@ export class News extends Component {
                     <Newsitem  title={element.title.slice(0,45)} description={element.description.slice(0,90)} imageUrl={element.urlToImage} newsUrl={element.url} />
                 </div>
                 })}
+                </div>
+                <div className="container d-flex justify-content-between">
+                    <button type="button" class="btn btn-dark" onClick={this.handlePrevClick}> &larr; Previous</button>
+                    <button type="button" class="btn btn-dark" onClick={this.handleNextClick}> Next &larr;</button>
                 </div>
             </div>
         )
