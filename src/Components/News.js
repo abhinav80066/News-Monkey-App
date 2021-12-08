@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Newsitem from './Newsitem'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import '../App.css';
 
 export class News extends Component {
     static defaultProps = {
@@ -61,7 +62,7 @@ export class News extends Component {
     render() {
         return (
             <div className="container my-3">
-                <h2> News Top Headlines.</h2>
+                <h1 style={{margin: '35px', textAlign: 'center'}}> NewsMonkey Top Headlines.</h1>
                 <div className="row">
                 {this.state.articles.map((element)=>{
                     return  <div className="col-md-4" key={element.url}>
