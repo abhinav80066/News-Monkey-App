@@ -25,37 +25,36 @@ export class News extends Component {
         }
     }
 
-    async componentDidMount(){
-        window.scrollTo(0, 0);
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=1&pageSize=${this.props.pageSize}`;
+    async updateNews(pageNo){
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         let data = await fetch(url);
         let parsedData = await data.json()
         console.log(parsedData);
         this.setState({articles:parsedData.articles})
     }
+
+    async componentDidMount(){
+        window.scrollTo(0, 0);
+        this.updateNews();
+    }
     handleNextClick = async ()=>{
-        console.log("Next")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
-        let data = await fetch(url);
-        let parsedData = await data.json()
-        console.log(parsedData);
-        this.setState({
-            articles:parsedData.articles,
-            page: this.state.page + 1,
-        })
+        this.setState({page:this.state.page+1})
+        this.updateNews()
         window.scrollTo(0, 0);
     }
     
     handlePrevClick = async ()=>{
-        console.log("Prev")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
-        let data = await fetch(url);
-        let parsedData = await data.json()
-        console.log(parsedData);
-        this.setState({
-            articles:parsedData.articles,
-            page: this.state.page - 1,
-        })
+        // console.log("Prev")
+        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f77c7a6bde164b85a8c17cbd4edfd78e&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
+        // let data = await fetch(url);
+        // let parsedData = await data.json()
+        // console.log(parsedData);
+        // this.setState({
+        //     articles:parsedData.articles,
+        //     page: this.state.page - 1,
+        // })
+        this.setState({page:this.state.page-1})
+        this.updateNews();
         window.scrollTo(0, 0);
     }
 
