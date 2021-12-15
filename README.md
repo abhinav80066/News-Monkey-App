@@ -1,6 +1,6 @@
 # News Monkey App
 
-This is a Web Application Built using React and Bootstrap. This application show the trendind news from different categories. News are fetched in React through [NEWS API](https://newsapi.org/).
+This is a Web Application Built using React and Bootstrap. This application show the trending news from different categories. News are fetched in React through [NEWS API](https://newsapi.org/).
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
